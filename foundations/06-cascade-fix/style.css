@@ -2,39 +2,100 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.para,
+.para,         /* This is just a grouping selector to give common properties to both classes. It has nothing to do with Specifity*/
 .small-para {
   color: hsl(0, 0%, 0%);
   font-weight: 800;
 }
 
-.small-para {
+/*.small-para {    ---> We want smaller paragraph to have this rule but it wouldn't have it because this rule and the rule below it (*para) have the same specifity so by the rule of order the last rule will be picked
   font-size: 14px;
   font-weight: 800;
-}
+}*/
+/* SOLUTION */
+
+/* 
+ To fix this we can remove it from its original position in the file:
+
+  .small-para {
+    font-size: 14px;
+    font-weight: 800;
+  } 
+
+  and place it after the .para selector, taking advantage of the rule order since both selectors have the same specificity. 
+  
+  Another solution would be keeping it in its original place and just chaining selectors, giving this rule a higher specificity:
+
+  p.small-para {            or       .para.small-para {
+    font-size: 14px;                  font-size: 14px;
+    font-weight: 800;                 font-weight: 800;
+  }                                  }
+*/
+
+p.small-para {
+  font-size: 14px;
+  font-weight: 800;
+} 
 
 .para {
   font-size: 22px;
 }
 
-.confirm {
+
+/*.confirm {                                   We want the confirm-button to have this rule but it wouldn't have it because .confirm and .button have the same specifity so by the rule of order .button would be picked
   background: green;
-  color: white;
+  color: white;                           
   font-weight: bold;
 } 
+ 
+  To fix this we remove the original .confirm selector:
 
-.button {
+  Then we used an ID selector instead, since it has a higher specificity than the .button selector.
+
+  Other solutions would be to simply move the .confirm rule below the .button rule(which we have done here), or to use the .button.confirm selector without moving it:
+
+  .button.confirm {
+    background: green;
+    color: white;
+    font-weight: bold;
+  }
+*/
+.button {                                   
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
   font-size: 20px;
 }
+.confirm {
+    background: green;
+    color: white;
+    font-weight: bold;
+} 
 
-.child {
+.text.child {
   color: rgb(0, 0, 0);
   font-weight: 800;
   font-size: 14px;
 }
+/*
+  For the following rule we first removed it from its original position in the file: 
 
+  .child {
+    color: rgb(0, 0, 0);
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  Then we added another selector to create a descendant combinator. If we only created a descendant combinator, the specificity would be tied with the
+  div.text selector and it would come down to rule order, and if we only moved it the div.text selector would still have a higher specificity.
+  
+  Another solution would be to keep the rule where it was and just replace the div selector with the .text selector(which we have done here):
+
+  .text .child {
+    color: rgb(0, 0, 0);
+    font-weight: 800;
+    font-size: 14px;
+  }
+*/
 div.text {
   color: rgb(0, 0, 0);
   font-size: 22px;
